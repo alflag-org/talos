@@ -1,0 +1,19 @@
+[tools]
+python = "3.14.6"
+actionlint = "1.7.12"
+shellcheck = "0.11.0"
+
+[tasks.setup]
+run = """
+python -m venv .venv
+.venv/bin/python -m pip install -e '.[dev]'
+"""
+
+[tasks.check]
+run = """
+actionlint
+.venv/bin/ruff check .
+.venv/bin/ruff format --check .
+.venv/bin/pytest
+.venv/bin/python -m build
+"""

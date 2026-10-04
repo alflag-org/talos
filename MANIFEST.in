@@ -1,0 +1,3 @@
+include requirements.txt
+recursive-include commands *.py
+recursive-include tests *.py *.json
