@@ -1,0 +1,28 @@
+{
+  "resources": [
+    {"type": "node", "node": "pve-a"},
+    {"type": "qemu", "vmid": 101, "node": "pve-a", "name": "app-a", "template": 0},
+    {"type": "lxc", "vmid": 102, "node": "pve-a", "name": "dns-a", "template": 0},
+    {"type": "qemu", "vmid": 900, "node": "pve-a", "name": "template-a", "template": 1}
+  ],
+  "configs": {
+    "qemu:101": {
+      "name": "app-a", "cores": 2, "sockets": 2, "memory": 4096,
+      "virtio0": "local:vm-101-disk-0,size=8G",
+      "scsi1": "local:vm-101-disk-1,size=512.25M",
+      "ide2": "local:iso/installer.iso,media=cdrom",
+      "sata1": "local:vm-101-cloudinit,media=cdrom",
+      "efidisk0": "local:vm-101-efi,size=4M",
+      "tpmstate0": "local:vm-101-tpm,size=4M",
+      "unused0": "local:vm-101-unused,size=10G"
+    },
+    "lxc:102": {
+      "hostname": "dns-a", "cores": 1, "memory": 1024,
+      "rootfs": "local:subvol-102-disk-0,size=2G",
+      "mp0": "local:subvol-102-disk-1,mp=/data,size=3G",
+      "mp1": "/srv/shared,mp=/shared",
+      "mp2": "/dev/example,mp=/device"
+    },
+    "qemu:900": {"name": "template-a", "template": 1}
+  }
+}
